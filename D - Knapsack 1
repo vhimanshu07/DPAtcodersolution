@@ -1,0 +1,99 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define  forloop for(int i=0;i<n;i++)
+#define pb push_back 
+#define ull unsigned long long
+#define ll long long
+#define mod 1000000007
+#define MOD 998244353;
+#define unmap unordered_map
+#define pi 3.1415926536
+#define testcases ll t;cin>>t;while(t--)
+#define  mp make_pair
+#define  vcp vector<pair<ll,ll>>
+#define preci(x,y)  fixed<<setprecision(y)<<x
+#define SORT_UNIQUE(c) (sort(c.begin(),c.end()), c.resize(distance(c.begin(),unique(c.begin(),c.end()))))
+#define fast ios::sync_with_stdio(false);    cin.tie(0); cout.tie(0);
+#define preinc priority_queue <ll, vector<ll>, greater<ll>>
+#define predec priority_queue<ll> 
+#define vll vector<ll>
+#define f(a,b) for(ll i=a;i<=b;i++)
+#define fi(a,b) for(ll i=a;i>=b;i--)
+int steps(int a[],vector<int>&v,int i,int k)
+{
+ 
+  if(i==v.size()-1)
+  {
+    return 0;
+  }
+  if(v[i]!=-1)
+  {
+    return v[i];
+  }
+  int on=INT_MAX;
+  
+  for(int j=1;j<=k&&j+i<v.size();j++)
+  {
+    on=min(on,steps(a,v,j+i,k)+abs(a[i+j]-a[i]));
+  }
+  
+return v[i]=on;
+}
+int vac(int a[][3],int ind,int n,vector<vector<ll>>&v,int lastpic)
+{
+   if(ind>=n)
+   {
+    return 0;
+   }
+   if(v[ind][lastpic]!=-1)
+    return v[ind][lastpic];
+   int ans=INT_MIN;
+    for(int j=0;j<3;j++)
+    {
+        if(j!=lastpic)
+            ans=max(ans,vac(a,ind+1,n,v,j)+a[ind][j]);
+    }
+    
+  // cout<<ans<<"\n";
+   v[ind][lastpic]=ans;
+   return ans;
+}
+ll knap(ll wei[],ll pri[],int ind,vector<vector<ll>>&dp,ll w)
+{
+  if(ind>=dp.size()-1)
+  {
+return 0;
+  }
+  
+  if(dp[ind][w]!=-1)
+  {
+    return dp[ind][w];
+  }
+  ll inc=LONG_MIN;
+  if(w-wei[ind]>=0)
+  {
+    
+    inc=knap(wei,pri,ind+1,dp,w-wei[ind])+pri[ind];
+  }
+  ll exc=knap(wei,pri,ind+1,dp,w);
+  return dp[ind][w]=max(inc,exc);
+}
+int main()
+{
+      #ifndef ONLINE_JUDGE
+  freopen("input.txt", "r", stdin);
+  freopen("out.txt", "w", stdout);
+  #endif
+    fast
+  ll n,w;
+  cin>>n>>w;
+  ll v[n],we[n];
+  forloop
+  {
+    cin>>we[i]>>v[i];
+  }
+  vector<vector<ll>>dp(n+1,vector<ll>(w+1,-1));
+  cout<<knap(we,v,0,dp,w);
+   
+   return 0;
+}
