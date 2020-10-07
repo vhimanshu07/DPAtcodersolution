@@ -1,0 +1,69 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define  forloop for(int i=0;i<n;i++)
+#define pb push_back 
+#define ull unsigned long long
+#define ll long long
+#define mod 1000000007
+#define MOD 998244353;
+#define unmap unordered_map
+#define pi 3.1415926536
+#define testcases ll t;cin>>t;while(t--)
+#define  mp make_pair
+#define  vcp vector<pair<ll,ll>>
+#define preci(x,y)  fixed<<setprecision(y)<<x
+#define SORT_UNIQUE(c) (sort(c.begin(),c.end()), c.resize(distance(c.begin(),unique(c.begin(),c.end()))))
+#define fast ios::sync_with_stdio(false);   cin.tie(0); cout.tie(0);
+#define preinc priority_queue <ll, vector<ll>, greater<ll>>
+#define predec priority_queue<ll> 
+#define vll vector<ll>
+#define f(a,b) for(ll i=a;i<=b;i++)
+int fl=0;
+
+int main() {
+    #ifndef ONLINE_JUDGE
+   freopen("inp.txt", "r", stdin);
+   freopen("output.txt", "w", stdout);
+   #endif
+   fast
+   string s,a;
+   cin>>s>>a;
+   int n=s.length();
+   int w=a.length();
+   vector<vector<ll>>v(n+1,vector<ll>(w+1,0));
+
+   for(int i=1;i<=n;i++)
+   {
+    for(int j=1;j<=w;j++)
+    {
+        if(s[i-1]==a[j-1])
+        {
+            v[i][j]=v[i-1][j-1]+1;
+        }
+        else
+        {
+            v[i][j]=max(v[i][j-1],v[i-1][j]);
+        }
+    }
+   }
+   int i=n,j=w;
+   string ans="";
+   while(i!=0&&j!=0)
+   {
+    if(v[i-1][j]==v[i][j])
+    {
+        i--;
+    }
+    else if(v[i][j-1]==v[i][j])
+        j--;
+    else
+    {
+        ans=s[i-1]+ans;
+        i--;
+        j--;
+    }
+}
+cout<<ans<<"\n";
+    // your code goes here
+    return 0;
+}
