@@ -1,0 +1,67 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define  forloop for(int i=0;i<n;i++)
+#define pb push_back 
+#define ull unsigned long long
+#define ll long long
+#define mod 1000000007
+#define MOD 998244353;
+#define unmap unordered_map
+#define pi 3.1415926536
+#define testcases ll t;cin>>t;while(t--)
+#define  mp make_pair
+#define  vcp vector<pair<ll,ll>>
+#define preci(x,y)  fixed<<setprecision(y)<<x
+#define SORT_UNIQUE(c) (sort(c.begin(),c.end()), c.resize(distance(c.begin(),unique(c.begin(),c.end()))))
+#define fast ios::sync_with_stdio(false);    cin.tie(0); cout.tie(0);
+#define preinc priority_queue <ll, vector<ll>, greater<ll>>
+#define predec priority_queue<ll> 
+#define vll vector<ll>
+#define f(a,b) for(ll i=a;i<=b;i++)
+#define fi(a,b) for(ll i=a;i>=b;i--)
+unmap<ll,unmap<ll,int>>gr;
+ll solve(ll cur,vector<ll>&dp)
+{
+  if(dp[cur]!=-1)
+  {
+    return dp[cur];
+  }
+  ll ans=0;
+  if(gr.count(cur))
+  {
+    for(auto i:gr[cur])
+    {
+      ll val=i.first;
+      ans=max(ans,solve(val,dp)+1);
+    }
+  }
+  return dp[cur]=ans;
+}
+int main()
+{
+      #ifndef ONLINE_JUDGE
+  freopen("input.txt", "r", stdin);
+  freopen("out.txt", "w", stdout);
+  #endif
+    fast
+    ll n,m;
+    cin>>n>>m;
+    for(int i=0;i<m;i++)
+    {
+      ll a,b;
+      cin>>a>>b;
+      gr[a][b]++;
+ 
+    }
+    vector<ll>dp(n+1,-1);
+    ll an=LONG_MIN;
+    for(auto i:gr)
+    {
+      an=max(an,solve(i.first,dp));
+    }
+    cout<<an;
+  
+ 
+   
+   return 0;
+}
